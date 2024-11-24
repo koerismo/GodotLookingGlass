@@ -1,14 +1,18 @@
 #ifndef HOLOPLAYVOLUME_H_
 #define HOLOPLAYVOLUME_H_
 
-#include <Environment.hpp>
-#include <Godot.hpp>
-#include <Input.hpp>
-#include <Rect2.hpp>
-#include <Spatial.hpp>
-#include <ViewportTexture.hpp>
-#include <Viewport.hpp>
-#include <Math.hpp>
+#include <gdextension_interface.h>
+#include <godot_cpp/core/defs.hpp>
+#include <godot_cpp/godot.hpp>
+
+#include <godot_cpp/classes/environment.hpp>
+#include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/input_event.hpp>
+#include <godot_cpp/variant/rect2.hpp>
+#include <godot_cpp/classes/area3d.hpp>
+#include <godot_cpp/classes/viewport_texture.hpp>
+#include <godot_cpp/classes/viewport.hpp>
+#include <godot_cpp/core/math.hpp>
 
 #include <vector>
 
@@ -23,8 +27,8 @@
 
 namespace godot {
 
-class HoloPlayVolume : public Spatial {
-    GODOT_CLASS(HoloPlayVolume, Spatial)
+class HoloPlayVolume : public Area3D {
+    GDCLASS(HoloPlayVolume, Area3D)
 
 public:
     enum QuiltPreset {
@@ -161,9 +165,10 @@ private:
     Input::MouseMode orig_mouse_mode;
     bool wait_for_active = false;
 
+protected:
+    static void _bind_methods();
+    
 public:
-    static void _register_methods();
-
     static void compile_shaders();
     static void free_shaders();
 

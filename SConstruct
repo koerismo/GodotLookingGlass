@@ -14,7 +14,7 @@ opts.Add(PathVariable('target_path', 'The path where the lib is installed.', 'bu
 opts.Add(PathVariable('target_name', 'The library name.', 'libgdholoplay', PathVariable.PathAccept))
 
 # Local dependency paths, adapt them to your setup
-godot_headers_path = "godot-cpp/godot-headers/"
+godot_headers_path = "godot-cpp/gdextension/"
 cpp_bindings_path = "godot-cpp/"
 cpp_library = "libgodot-cpp"
 
@@ -69,8 +69,8 @@ cpp_library += '.' + str(bits)
 env.Append(CPPPATH=['.',
                     godot_headers_path,
                     cpp_bindings_path + 'include/',
-                    cpp_bindings_path + 'include/core/',
-                    cpp_bindings_path + 'include/gen/',
+                    cpp_bindings_path + 'include/',
+                    cpp_bindings_path + 'gen/include/',
                     'HoloPlayCore/include/',
                     'glfw/include/',
                     'glad/include/'])

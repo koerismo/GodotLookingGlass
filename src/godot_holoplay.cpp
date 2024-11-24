@@ -1,33 +1,20 @@
 #include "godot_holoplay/HoloPlayVolume.h"
 
-#include <ProjectSettings.hpp>
-#include <VisualServer.hpp>
-#include <OS.hpp>
-#include <Engine.hpp>
+#include <gdextension_interface.h>
+#include <godot_cpp/core/defs.hpp>
+#include <godot_cpp/godot.hpp>
+
+#include <godot_cpp/classes/project_settings.hpp>
+#include <godot_cpp/classes/rendering_server.hpp>
+#include <godot_cpp/classes/engine.hpp>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <HoloPlayCore.h>
 
-extern "C" void GDN_EXPORT godot_gdnative_init(godot_gdnative_init_options *o) {
-	godot::Godot::gdnative_init(o);
-}
-
-extern "C" void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_options *o) {
-	HoloPlayVolume::free_shaders();
-	glfwTerminate();
-
-	hpc_CloseApp();
-
-	godot::Godot::gdnative_terminate(o);
-}
-
-extern "C" void GDN_EXPORT godot_gdnative_singleton() {
-}
-
-extern "C" void GDN_EXPORT godot_nativescript_init(void *p_handle) {
-	godot::Godot::nativescript_init(p_handle);
+void initialize(ModuleInitializationLevel p_level) {
+	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) return;
 
 	hpc_client_error errco = hpc_InitializeApp("Godot HoloPlay Plugin", hpc_LICENSE_NONCOMMERCIAL);
 	if (errco) {
@@ -71,6 +58,26 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void *p_handle) {
 	}
 
 	HoloPlayVolume::compile_shaders();
+	GDREGISTER_CLASS(godot::HoloPlayVolume);
+}
 
-	godot::register_tool_class<godot::HoloPlayVolume>();
+void uninitialize(ModuleInitializationLevel p_level) {
+	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) return;
+
+	HoloPlayVolume::free_shaders();
+	glfwTerminate();
+	hpc_CloseApp();
+}
+
+extern "C" {
+	// Initialization.
+	GDExtensionBool GDE_EXPORT gd_holoplay_init(GDExtensionInterfaceGetProcAddress p_get_proc_address, const GDExtensionClassLibraryPtr p_library, GDExtensionInitialization *r_initialization) {
+		godot::GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
+
+		init_obj.register_initializer(initialize);
+		init_obj.register_terminator(uninitialize);
+		init_obj.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_SCENE);
+
+		return init_obj.init();
+	}
 }

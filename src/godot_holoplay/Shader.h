@@ -3,7 +3,9 @@
 
 #include <glad/glad.h>
 
-#include <Godot.hpp>
+#include <gdextension_interface.h>
+#include <godot_cpp/godot.hpp>
+
 #include <fstream>
 #include <sstream>
 
