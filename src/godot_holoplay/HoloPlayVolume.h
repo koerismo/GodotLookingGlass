@@ -197,7 +197,7 @@ public:
     int get_device_index() const;
     void set_device_index(int p_device_index);
 
-    bool is_dummy() const;
+    bool get_dummy() const;
     void set_dummy(bool p_dummy);
 
     bool get_debug_view() const;
