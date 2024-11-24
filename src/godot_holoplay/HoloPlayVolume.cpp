@@ -73,7 +73,7 @@ void HoloPlayVolume::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_environment"), &HoloPlayVolume::get_environment);
     ClassDB::bind_method(D_METHOD("get_device_index"), &HoloPlayVolume::get_device_index);
     ClassDB::bind_method(D_METHOD("set_device_index", "p_device_index"), &HoloPlayVolume::set_device_index);
-    ClassDB::bind_method(D_METHOD("is_dummy"), &HoloPlayVolume::is_dummy);
+    ClassDB::bind_method(D_METHOD("get_dummy"), &HoloPlayVolume::is_dummy);
     ClassDB::bind_method(D_METHOD("set_dummy", "p_dummy"), &HoloPlayVolume::set_dummy);
     ClassDB::bind_method(D_METHOD("get_debug_view"), &HoloPlayVolume::get_debug_view);
     ClassDB::bind_method(D_METHOD("set_debug_view", "p_debug_view"), &HoloPlayVolume::set_debug_view);
