@@ -1,6 +1,7 @@
 add_rules("mode.debug", "mode.release")
 set_languages("c99", "c++17")
 add_requires("glfw 3.4")
+add_defines("TYPED_METHOD_BIND")
 
 target("LibGlass")
     set_kind("shared")
